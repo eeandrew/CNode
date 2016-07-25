@@ -1,0 +1,115 @@
+﻿.font-awesome {
+    font-family: "FontAwesome";
+}
+
+.border-bottom {
+  height:1;
+  border-width:1;
+  border-color:#ccc;
+}
+
+.scrollview-wrapper {
+  height:100%;
+  width:100%;
+}
+
+.scrollview {
+  height: 100%;
+}
+
+.scrollview-content {
+  height: 100%;
+}
+
+.scrollview-tab {
+}
+
+
+.navigator {
+  text-align: center;
+  width: 320;
+  top:15;
+}
+
+.navigator-wrapper {
+  width:100%;
+  height: 100%;
+}
+
+.navigator-item {
+  width:40;
+  margin-left: 20;
+  margin-right: 20;
+  font-size: 15;
+  font-weight: bold;
+  color:rgba(0,0,0,0.6); 
+}
+.indicator {
+  top: 30;
+  width: 320;
+  height:2;
+  margin-top:10;
+}
+
+.indicator-item {
+  width: 40;
+  height: 2;
+  top:0;
+  background-color: #086ed5;
+}
+
+.main-body {
+  width: 100%;
+  height: 100%;
+}
+
+.bottom-tab {
+  height: 40;
+  width: 100%;
+  background-color: #FFF;
+}
+
+.border {
+  height: 1;
+  border-width: 0;
+  background-color: #CCC;
+}
+
+.bottom-tab-item {
+  
+}
+
+.bottom-tab-item StackLayout {
+  text-align: center;
+  vertical-align: middle;
+  height: 100%;
+  width: 100%;
+}
+
+.tab-label {
+  font-size: 10;
+}
+
+.tab-icon {
+  font-size: 20;
+}
+
+.major-gray-color {
+  color: #AAA;
+}
+
+.major-blue-color {
+  color:#086ed5;
+}
+
+.slide-out {
+    animation-name: slideout;
+    animation-duration: 0.5s;
+    animation-timing-function: ease-in;
+   animation-fill-mode: forwards;
+}
+
+@keyframes slideout {
+    from { transform: translate(0, 0); }
+    to { transform: translate(0, 40); }
+}
