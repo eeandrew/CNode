@@ -21,6 +21,9 @@ import {
 import {
   TopicListService
 } from './Services/topiclist.service';
+import {
+  Tab
+} from './Components/Tab/tab.component';
 import { RadSideDrawer } from "nativescript-telerik-ui/sidedrawer";
 import { Page } from "ui/page";
 import { ActionItem } from "ui/action-bar";
@@ -49,43 +52,9 @@ import { RadSideDrawerComponent, SideDrawerType } from "nativescript-telerik-ui/
         </ScrollView>
     </ActionBar>
     <DockLayout stretchLastChild="true" class="main-body">
-      <GridLayout dock="bottom" class="bottom-tab" rows="1,*" columns="1*,1*,1*,1*,1*">
-        <Label class="border" row="0" col="0" colSpan="5"></Label>
-        <AbsoluteLayout row="1" col="0" class="bottom-tab-item">
-          <StackLayout orientation="vertical" class="major-gray-color">
-            <Label text="&#xf015;" class="font-awesome tab-icon" ></Label>
-            <Label text="首页" class="tab-label"></Label>
-          </StackLayout>
-        </AbsoluteLayout>
-
-        <AbsoluteLayout row="1" col="1" class="bottom-tab-item">
-          <StackLayout orientation="vertical" class="major-blue-color">
-            <Label text="&#xf19d;" class="font-awesome tab-icon" ></Label>
-            <Label text="招聘" class="tab-label "></Label>
-          </StackLayout>
-        </AbsoluteLayout>
-
-        <AbsoluteLayout row="1" col="2" class="bottom-tab-item">
-          <StackLayout orientation="vertical" class="major-gray-color">
-            <Label text="&#xf004;" class="font-awesome tab-icon" ></Label>
-            <Label text="收藏" class="tab-label"></Label>
-          </StackLayout>
-        </AbsoluteLayout>
-
-        <AbsoluteLayout row="1" col="3" class="bottom-tab-item">
-          <StackLayout orientation="vertical" class="major-gray-color">
-            <Label text="&#xf0f3;" class="font-awesome tab-icon" ></Label>
-            <Label text="通知" class="tab-label"></Label>
-          </StackLayout>
-        </AbsoluteLayout>
-
-        <AbsoluteLayout row="1" col="4" class="bottom-tab-item">
-          <StackLayout orientation="vertical" class="major-gray-color">
-            <Label text="&#xf007;" class="font-awesome tab-icon" ></Label>
-            <Label text="我" class="tab-label"></Label>
-          </StackLayout>
-        </AbsoluteLayout>
-      </GridLayout>
+      <StackLayout dock="bottom">
+        <tab [tabs]="tabs"></tab>
+      </StackLayout>
       <StackLayout #wrapper class="scrollview-wrapper" dock="top">
           <ScrollView  #scrollview class="scrollview" orientation="horizontal" >
               <StackLayout class="scrollview-content" orientation="horizontal" >
@@ -107,6 +76,7 @@ import { RadSideDrawerComponent, SideDrawerType } from "nativescript-telerik-ui/
       </StackLayout>
      </DockLayout>
     `,
+    directives:[Tab]
 })
 export class AppComponent implements OnInit,AfterViewInit {
   @ViewChild('scrollview') scrollViewRef: ElementRef;
@@ -118,6 +88,7 @@ export class AppComponent implements OnInit,AfterViewInit {
   public myItems;
   leftPos = 20;
   tabWidth = 0;
+  tabs = [{label:'首页',icon:'&#xf015;'},{label:'招聘',icon:'&#xf19d;'},{label:'收藏',icon:'&#xf004;'},{label:'通知',icon:'&#xf0f3;'},{label:'我',icon:'&#xf007;'}]
   /**
    * 0:no directin 1:right -1:left
    */
