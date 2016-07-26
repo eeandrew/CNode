@@ -22,6 +22,7 @@ var ScrollBar = (function () {
         core_1.Component({
             selector: 'scroll-bar',
             template: "\n   <ActionBar title=\"CNode\">\n    <ScrollView orientation=\"horizontal\" width=\"320\">\n      <AbsoluteLayout class=\"navigator-wrapper\">\n        <StackLayout orientation=\"horizontal\" class=\"navigator\">\n          <Label class=\"navigator-item\" text=\"\u5168\u90E8\" (tap)=\"changeTab(0)\"></Label>\n          <Label class=\"navigator-item\" text=\"\u7CBE\u534E\" (tap)=\"changeTab(1)\"></Label>\n          <Label class=\"navigator-item\" text=\"\u5206\u4EAB\" (tap)=\"changeTab(2)\"></Label>\n          <Label class=\"navigator-item\" text=\"\u95EE\u7B54\" (tap)=\"changeTab(3)\"></Label>\n        </StackLayout>\n      <AbsoluteLayout class=\"indicator\">\n        <Label class=\"indicator-item\" #indicator [left]=\"leftPos\"></Label>\n      </AbsoluteLayout>\n      </AbsoluteLayout>\n    </ScrollView>\n    </ActionBar>\n  ",
+            styleUrls: ['./Components/ScrollBar/scrollbar.css']
         }), 
         __metadata('design:paramtypes', [])
     ], ScrollBar);

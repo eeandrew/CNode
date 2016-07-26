@@ -24,6 +24,7 @@ import {
     </ScrollView>
     </ActionBar>
   `,
+  styleUrls:['./Components/ScrollBar/scrollbar.css']
 })
 export class ScrollBar {
   @ViewChild('indicator') indicatorRef;

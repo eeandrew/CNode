@@ -27,6 +27,9 @@ import {
 import {
   ScrollBar
 } from './Components/ScrollBar/scrollbar.component';
+import {
+  HScroller
+} from './Components/HScroller/hscroller.component';
 import { RadSideDrawer } from "nativescript-telerik-ui/sidedrawer";
 import { Page } from "ui/page";
 import { ActionItem } from "ui/action-bar";
@@ -39,8 +42,10 @@ import { RadSideDrawerComponent, SideDrawerType } from "nativescript-telerik-ui/
     selector: "mp-app",
     providers:[TopicListService],
     template:`
+    <!--Action Bar-->
     <scroll-bar [leftPos]="leftPos" [onTabChange]="onTabChange"></scroll-bar>
     <DockLayout stretchLastChild="true" class="main-body">
+      <!--Bottom Tab-->
       <StackLayout dock="bottom">
         <tab [tabs]="tabs"></tab>
       </StackLayout>
@@ -65,7 +70,7 @@ import { RadSideDrawerComponent, SideDrawerType } from "nativescript-telerik-ui/
       </StackLayout>
      </DockLayout>
     `,
-    directives:[Tab,ScrollBar]
+    directives:[Tab,ScrollBar,HScroller]
 })
 export class AppComponent implements OnInit,AfterViewInit {
   @ViewChild('scrollview') scrollViewRef: ElementRef;
