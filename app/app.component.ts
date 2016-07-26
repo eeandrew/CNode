@@ -1,5 +1,15 @@
-import { Component, ElementRef, ViewChild, Inject, OnInit, AfterViewInit, ChangeDetectorRef } from "@angular/core";
-import { View } from "ui/core/view";
+import { 
+  Component, 
+  ElementRef, 
+  ViewChild, 
+  Inject, 
+  OnInit, 
+  AfterViewInit, 
+  ChangeDetectorRef
+ } from "@angular/core";
+import { 
+  View 
+} from "ui/core/view";
 import {
   ScrollView
 } from 'ui/scroll-view';
@@ -49,38 +59,18 @@ import { RadSideDrawerComponent, SideDrawerType } from "nativescript-telerik-ui/
       <StackLayout dock="bottom">
         <tab [tabs]="tabs"></tab>
       </StackLayout>
-      <StackLayout #wrapper class="scrollview-wrapper" dock="top">
-          <ScrollView  #scrollview class="scrollview" orientation="horizontal" >
-              <StackLayout class="scrollview-content" orientation="horizontal" >
-                  <GridLayout class="scrollview-tab" rows="auto,*" [style.width]="tabWidth">
-                    <ListView [items]="myItems" row="1">
-                        <template let-item="item" let-i="index" let-odd="odd" let-even="even">
-                            <StackLayout>
-                                <Label [text]='"index: " + i'></Label>
-                                <Label [text]='"[" + item.id +"] " + item.name'></Label>
-                            </StackLayout>
-                        </template>
-                    </ListView>
-                  </GridLayout>
-                  <StackLayout class="scrollview-tab" [style.width]="tabWidth"><Label text="2"></Label></StackLayout>
-                  <StackLayout class="scrollview-tab" [style.width]="tabWidth"><Label text="3"></Label></StackLayout>
-                  <StackLayout class="scrollview-tab" [style.width]="tabWidth"><Label text="4"></Label></StackLayout>
-              </StackLayout>
-          </ScrollView>
+      <StackLayout class="scrollview-wrapper" dock="top">
+          <hscroller [onScroll]="onScroll" [activeIndex]="activeIndex"></hscroller>
       </StackLayout>
      </DockLayout>
     `,
     directives:[Tab,ScrollBar,HScroller]
 })
 export class AppComponent implements OnInit,AfterViewInit {
-  @ViewChild('scrollview') scrollViewRef: ElementRef;
-  @ViewChild('wrapper') wrapperRef: ElementRef;
-  private scrollView: ScrollView;
-  private wrapper: StackLayout;
   private indicator: Label;
-  public myItems;
   leftPos = 20;
   tabWidth = 0;
+  activeIndex = 0;
   tabs = [{label:'首页',icon:'&#xf015;'},{label:'招聘',icon:'&#xf19d;'},{label:'收藏',icon:'&#xf004;'},{label:'通知',icon:'&#xf0f3;'},{label:'我',icon:'&#xf007;'}]
   /**
    * 0:no directin 1:right -1:left
@@ -89,15 +79,11 @@ export class AppComponent implements OnInit,AfterViewInit {
   constructor( @Inject(Page) private page: Page, 
     private _changeDetectionRef: ChangeDetectorRef,
     private _topicListService: TopicListService) {
-    this.myItems = [];
-    for (var i = 0; i < 50; i++) {
-        this.myItems.push({id:i, name:"data item " + i});
-    }
   }
 
   ngOnInit() {
-    this.onScrollViewScrolling = this.onScrollViewScrolling.bind(this);
     this.onTabChange = this.onTabChange.bind(this);
+    this.onScroll = this.onScroll.bind(this);
     const topicParam = {
       tab:'job',
       limit:1
@@ -105,18 +91,8 @@ export class AppComponent implements OnInit,AfterViewInit {
     this._topicListService.getTopicList(topicParam)
   }
 
-  private isAndroid():boolean {
-    return device.os === platformNames.android;
-  }
-
-  private isIOS():boolean{
-    return device.os === platformNames.ios;
-  }
-
-  private onScrollViewScrolling(event):void {
-    let scrollX = event.scrollX;
-    console.log(scrollX);
-    this.leftPos = (scrollX / (this.tabWidth*3)) * 240 + 20;
+  private onScroll(pos:number){
+    this.leftPos = pos;
     this._changeDetectionRef.detectChanges();
   }
 
@@ -125,7 +101,7 @@ export class AppComponent implements OnInit,AfterViewInit {
   }
 
   private onTabChange(index:number) {
-    this.scrollView.scrollToHorizontalOffset(index * this.tabWidth,true);
+    this.activeIndex = index;
   }
   
   ngAfterViewInit() {
@@ -134,14 +110,5 @@ export class AppComponent implements OnInit,AfterViewInit {
       this.tabWidth = screen.mainScreen.widthDIPs;
       this.leftPos = 20;
     },1);
-    this.scrollView = this.scrollViewRef.nativeElement;
-    this.wrapper = this.wrapperRef.nativeElement;
-    this.isAndroid() && this.scrollView.android.setShowsHorizontalScrollIndicator(false);
-    this.scrollView.on('scroll',this.onScrollViewScrolling);
-    if(this.isIOS()){
-      this.scrollView.ios.showsHorizontalScrollIndicator = false;
-      this.scrollView.ios.scrollEnabled = true;
-      this.scrollView.ios.pagingEnabled = true;
-    }
   }
 }
