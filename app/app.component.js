@@ -3,6 +3,7 @@ var core_1 = require("@angular/core");
 var platform_1 = require('platform');
 var topiclist_service_1 = require('./Services/topiclist.service');
 var tab_component_1 = require('./Components/Tab/tab.component');
+var scrollbar_component_1 = require('./Components/ScrollBar/scrollbar.component');
 var page_1 = require("ui/page");
 var AppComponent = (function () {
     function AppComponent(page, _changeDetectionRef, _topicListService) {
@@ -23,6 +24,7 @@ var AppComponent = (function () {
     }
     AppComponent.prototype.ngOnInit = function () {
         this.onScrollViewScrolling = this.onScrollViewScrolling.bind(this);
+        this.onTabChange = this.onTabChange.bind(this);
         var topicParam = {
             tab: 'job',
             limit: 1
@@ -48,6 +50,9 @@ var AppComponent = (function () {
         enumerable: true,
         configurable: true
     });
+    AppComponent.prototype.onTabChange = function (index) {
+        this.scrollView.scrollToHorizontalOffset(index * this.tabWidth, true);
+    };
     AppComponent.prototype.ngAfterViewInit = function () {
         var _this = this;
         console.log(platform_1.screen.mainScreen.widthDIPs);
@@ -73,17 +78,13 @@ var AppComponent = (function () {
         core_1.ViewChild('wrapper'), 
         __metadata('design:type', core_1.ElementRef)
     ], AppComponent.prototype, "wrapperRef", void 0);
-    __decorate([
-        core_1.ViewChild('indicator'), 
-        __metadata('design:type', core_1.ElementRef)
-    ], AppComponent.prototype, "indicatorRef", void 0);
     AppComponent = __decorate([
         core_1.Component({
             moduleId: module.id,
             selector: "mp-app",
             providers: [topiclist_service_1.TopicListService],
-            template: "\n    <ActionBar title=\"test\">\n        <ScrollView orientation=\"horizontal\" width=\"320\">\n          <AbsoluteLayout class=\"navigator-wrapper\">\n            <StackLayout orientation=\"horizontal\" class=\"navigator\">\n              <Label class=\"navigator-item\" text=\"\u5168\u90E8\"></Label>\n              <Label class=\"navigator-item\" text=\"\u7CBE\u534E\"></Label>\n              <Label class=\"navigator-item\" text=\"\u5206\u4EAB\"></Label>\n              <Label class=\"navigator-item\" text=\"\u95EE\u7B54\"></Label>\n            </StackLayout>\n          <AbsoluteLayout class=\"indicator\">\n            <Label class=\"indicator-item\" #indicator [left]=\"leftPos\"></Label>\n          </AbsoluteLayout>\n          </AbsoluteLayout>\n        </ScrollView>\n    </ActionBar>\n    <DockLayout stretchLastChild=\"true\" class=\"main-body\">\n      <StackLayout dock=\"bottom\">\n        <tab [tabs]=\"tabs\"></tab>\n      </StackLayout>\n      <StackLayout #wrapper class=\"scrollview-wrapper\" dock=\"top\">\n          <ScrollView  #scrollview class=\"scrollview\" orientation=\"horizontal\" >\n              <StackLayout class=\"scrollview-content\" orientation=\"horizontal\" >\n                  <GridLayout class=\"scrollview-tab\" rows=\"auto,*\" [style.width]=\"tabWidth\">\n                    <ListView [items]=\"myItems\" row=\"1\">\n                        <template let-item=\"item\" let-i=\"index\" let-odd=\"odd\" let-even=\"even\">\n                            <StackLayout>\n                                <Label [text]='\"index: \" + i'></Label>\n                                <Label [text]='\"[\" + item.id +\"] \" + item.name'></Label>\n                            </StackLayout>\n                        </template>\n                    </ListView>\n                  </GridLayout>\n                  <StackLayout class=\"scrollview-tab\" [style.width]=\"tabWidth\"><Label text=\"2\"></Label></StackLayout>\n                  <StackLayout class=\"scrollview-tab\" [style.width]=\"tabWidth\"><Label text=\"3\"></Label></StackLayout>\n                  <StackLayout class=\"scrollview-tab\" [style.width]=\"tabWidth\"><Label text=\"4\"></Label></StackLayout>\n              </StackLayout>\n          </ScrollView>\n      </StackLayout>\n     </DockLayout>\n    ",
-            directives: [tab_component_1.Tab]
+            template: "\n    <scroll-bar [leftPos]=\"leftPos\" [onTabChange]=\"onTabChange\"></scroll-bar>\n    <DockLayout stretchLastChild=\"true\" class=\"main-body\">\n      <StackLayout dock=\"bottom\">\n        <tab [tabs]=\"tabs\"></tab>\n      </StackLayout>\n      <StackLayout #wrapper class=\"scrollview-wrapper\" dock=\"top\">\n          <ScrollView  #scrollview class=\"scrollview\" orientation=\"horizontal\" >\n              <StackLayout class=\"scrollview-content\" orientation=\"horizontal\" >\n                  <GridLayout class=\"scrollview-tab\" rows=\"auto,*\" [style.width]=\"tabWidth\">\n                    <ListView [items]=\"myItems\" row=\"1\">\n                        <template let-item=\"item\" let-i=\"index\" let-odd=\"odd\" let-even=\"even\">\n                            <StackLayout>\n                                <Label [text]='\"index: \" + i'></Label>\n                                <Label [text]='\"[\" + item.id +\"] \" + item.name'></Label>\n                            </StackLayout>\n                        </template>\n                    </ListView>\n                  </GridLayout>\n                  <StackLayout class=\"scrollview-tab\" [style.width]=\"tabWidth\"><Label text=\"2\"></Label></StackLayout>\n                  <StackLayout class=\"scrollview-tab\" [style.width]=\"tabWidth\"><Label text=\"3\"></Label></StackLayout>\n                  <StackLayout class=\"scrollview-tab\" [style.width]=\"tabWidth\"><Label text=\"4\"></Label></StackLayout>\n              </StackLayout>\n          </ScrollView>\n      </StackLayout>\n     </DockLayout>\n    ",
+            directives: [tab_component_1.Tab, scrollbar_component_1.ScrollBar]
         }),
         __param(0, core_1.Inject(page_1.Page)), 
         __metadata('design:paramtypes', [page_1.Page, core_1.ChangeDetectorRef, topiclist_service_1.TopicListService])

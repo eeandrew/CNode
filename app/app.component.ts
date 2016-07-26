@@ -24,6 +24,9 @@ import {
 import {
   Tab
 } from './Components/Tab/tab.component';
+import {
+  ScrollBar
+} from './Components/ScrollBar/scrollbar.component';
 import { RadSideDrawer } from "nativescript-telerik-ui/sidedrawer";
 import { Page } from "ui/page";
 import { ActionItem } from "ui/action-bar";
@@ -36,21 +39,7 @@ import { RadSideDrawerComponent, SideDrawerType } from "nativescript-telerik-ui/
     selector: "mp-app",
     providers:[TopicListService],
     template:`
-    <ActionBar title="test">
-        <ScrollView orientation="horizontal" width="320">
-          <AbsoluteLayout class="navigator-wrapper">
-            <StackLayout orientation="horizontal" class="navigator">
-              <Label class="navigator-item" text="全部"></Label>
-              <Label class="navigator-item" text="精华"></Label>
-              <Label class="navigator-item" text="分享"></Label>
-              <Label class="navigator-item" text="问答"></Label>
-            </StackLayout>
-          <AbsoluteLayout class="indicator">
-            <Label class="indicator-item" #indicator [left]="leftPos"></Label>
-          </AbsoluteLayout>
-          </AbsoluteLayout>
-        </ScrollView>
-    </ActionBar>
+    <scroll-bar [leftPos]="leftPos" [onTabChange]="onTabChange"></scroll-bar>
     <DockLayout stretchLastChild="true" class="main-body">
       <StackLayout dock="bottom">
         <tab [tabs]="tabs"></tab>
@@ -76,12 +65,11 @@ import { RadSideDrawerComponent, SideDrawerType } from "nativescript-telerik-ui/
       </StackLayout>
      </DockLayout>
     `,
-    directives:[Tab]
+    directives:[Tab,ScrollBar]
 })
 export class AppComponent implements OnInit,AfterViewInit {
   @ViewChild('scrollview') scrollViewRef: ElementRef;
   @ViewChild('wrapper') wrapperRef: ElementRef;
-  @ViewChild('indicator') indicatorRef: ElementRef;
   private scrollView: ScrollView;
   private wrapper: StackLayout;
   private indicator: Label;
@@ -104,6 +92,7 @@ export class AppComponent implements OnInit,AfterViewInit {
 
   ngOnInit() {
     this.onScrollViewScrolling = this.onScrollViewScrolling.bind(this);
+    this.onTabChange = this.onTabChange.bind(this);
     const topicParam = {
       tab:'job',
       limit:1
@@ -128,6 +117,10 @@ export class AppComponent implements OnInit,AfterViewInit {
 
  get dataItems() {
    return [{name:'test',description:'test'}];
+  }
+
+  private onTabChange(index:number) {
+    this.scrollView.scrollToHorizontalOffset(index * this.tabWidth,true);
   }
   
   ngAfterViewInit() {

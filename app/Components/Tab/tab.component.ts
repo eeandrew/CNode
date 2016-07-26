@@ -1,17 +1,18 @@
 import {
   Component,
   Input,
-  OnInit
+  OnInit,
+  AfterViewInit
 } from '@angular/core';
 
 @Component({
   selector:'tab',
   template:`
-    <GridLayout class="bottom-tab" rows="1,*" [columns]="columns">
+    <GridLayout class="tab" rows="1,*" [columns]="columns">
       <Label class="border" row="0" col="0" [colSpan]="tabs.length"></Label>
-      <AbsoluteLayout (tap)="onTabClick(i)" row="1" [col]="i" class="bottom-tab-item" *ngFor="let tab of tabs;let i = index;">
+      <AbsoluteLayout (tap)="onTabClick(i)" row="1" [col]="i" class="tab-item" *ngFor="let tab of tabs;let i = index;">
         <StackLayout orientation="vertical" [ngClass]="getClass(i)">
-          <Label text="&#xf015;" class="font-awesome tab-icon" ></Label>
+          <Label text="&#xf0f3;" class="font-awesome tab-icon" ></Label>
           <Label [text]="tab.label" class="tab-label"></Label>
         </StackLayout>
       </AbsoluteLayout>
@@ -19,13 +20,19 @@ import {
   `,
   styleUrls:['./Components/Tab/tab.css']
 })
-export class Tab implements OnInit{
+export class Tab implements OnInit,AfterViewInit{
   @Input('tabs') tabs:Array<Object>;
   //@Input('onTabChange') onTabChange:Function;
   columns:string;
   activeIndex:number = 0;
+  test:boolean = false;
   ngOnInit() {
     this.columns = this.getColumns(this.tabs.length);
+  }
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.test = true;
+    },10);
   }
 
   private getColumns(count:number):string {
@@ -38,6 +45,13 @@ export class Tab implements OnInit{
 
   private onTabClick(index:number):void {
     this.activeIndex = index;
+  }
+
+  private testClass():Object {
+    return {
+      "font-awesome":this.test,
+      "tab-icon":this.test
+    };
   }
 
   private getClass(index) {

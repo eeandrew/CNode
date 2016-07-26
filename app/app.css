@@ -63,36 +63,12 @@
   height: 100%;
 }
 
-.bottom-tab {
-  height: 40;
-  width: 100%;
-  background-color: #FFF;
-}
-
 .border {
   height: 1;
   border-width: 0;
   background-color: #CCC;
 }
 
-.bottom-tab-item {
-  
-}
-
-.bottom-tab-item StackLayout {
-  text-align: center;
-  vertical-align: middle;
-  height: 100%;
-  width: 100%;
-}
-
-.tab-label {
-  font-size: 10;
-}
-
-.tab-icon {
-  font-size: 20;
-}
 
 .major-gray-color {
   color: #AAA;
