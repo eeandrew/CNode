@@ -87,6 +87,5 @@ export class HScroller implements AfterViewInit,OnInit,OnChanges{
     let scrollX = event.scrollX;
     this.leftPos = (scrollX / (this.tabWidth*3)) * 240 + 20;
     this.onScroll && this.onScroll(this.leftPos);
-   // this._changeDetectionRef.detectChanges();
   }
 }

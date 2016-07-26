@@ -1,33 +1,8 @@
 import { 
   Component, 
-  ElementRef, 
-  ViewChild, 
-  Inject, 
   OnInit, 
-  AfterViewInit, 
   ChangeDetectorRef
  } from "@angular/core";
-import { 
-  View 
-} from "ui/core/view";
-import {
-  ScrollView
-} from 'ui/scroll-view';
-import {  
-  Label
-} from 'ui/label';
-import {
-  StackLayout
-} from 'ui/layouts/stack-layout';
-import {
-  GestureTypes,
-  TouchGestureEventData
-} from 'ui/gestures';
-import {
-  device,
-  platformNames,
-  screen
-} from 'platform';
 import {
   TopicListService
 } from './Services/topiclist.service';
@@ -40,25 +15,19 @@ import {
 import {
   HScroller
 } from './Components/HScroller/hscroller.component';
-import { RadSideDrawer } from "nativescript-telerik-ui/sidedrawer";
-import { Page } from "ui/page";
-import { ActionItem } from "ui/action-bar";
-import sideDrawerModule = require('nativescript-telerik-ui/sidedrawer');
-import * as ObservableModule from "data/observable";
-import { RadSideDrawerComponent, SideDrawerType } from "nativescript-telerik-ui/sidedrawer/angular";
 
 @Component({
-    moduleId: module.id,
     selector: "mp-app",
     providers:[TopicListService],
     template:`
     <!--Action Bar-->
     <scroll-bar [leftPos]="leftPos" [onTabChange]="onTabChange"></scroll-bar>
     <DockLayout stretchLastChild="true" class="main-body">
-      <!--Bottom Tab-->
+      <!--底部tab-->
       <StackLayout dock="bottom">
         <tab [tabs]="tabs"></tab>
       </StackLayout>
+      <!--主内容区-->
       <StackLayout class="scrollview-wrapper" dock="top">
           <hscroller [onScroll]="onScroll" [activeIndex]="activeIndex"></hscroller>
       </StackLayout>
@@ -66,8 +35,7 @@ import { RadSideDrawerComponent, SideDrawerType } from "nativescript-telerik-ui/
     `,
     directives:[Tab,ScrollBar,HScroller]
 })
-export class AppComponent implements OnInit,AfterViewInit {
-  private indicator: Label;
+export class AppComponent implements OnInit {
   leftPos = 20;
   tabWidth = 0;
   activeIndex = 0;
@@ -76,8 +44,7 @@ export class AppComponent implements OnInit,AfterViewInit {
    * 0:no directin 1:right -1:left
    */
   private xDirection: number = 0;
-  constructor( @Inject(Page) private page: Page, 
-    private _changeDetectionRef: ChangeDetectorRef,
+  constructor( private _changeDetectionRef: ChangeDetectorRef,
     private _topicListService: TopicListService) {
   }
 
@@ -102,13 +69,5 @@ export class AppComponent implements OnInit,AfterViewInit {
 
   private onTabChange(index:number) {
     this.activeIndex = index;
-  }
-  
-  ngAfterViewInit() {
-    console.log(screen.mainScreen.widthDIPs);
-    setTimeout(()=>{
-      this.tabWidth = screen.mainScreen.widthDIPs;
-      this.leftPos = 20;
-    },1);
   }
 }

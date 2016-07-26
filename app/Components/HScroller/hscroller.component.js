@@ -41,7 +41,6 @@ var HScroller = (function () {
         var scrollX = event.scrollX;
         this.leftPos = (scrollX / (this.tabWidth * 3)) * 240 + 20;
         this.onScroll && this.onScroll(this.leftPos);
-        // this._changeDetectionRef.detectChanges();
     };
     __decorate([
         core_1.ViewChild('scrollview'), 
