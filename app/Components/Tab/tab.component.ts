@@ -25,7 +25,7 @@ import {TNSFontIconPipe} from 'nativescript-ng2-fonticon';
 })
 export class Tab implements OnInit,AfterViewInit{
   @Input('tabs') tabs:Array<Object>;
-  //@Input('onTabChange') onTabChange:Function;
+  @Input('onTabChange') onTabChange:Function;
   columns:string;
   activeIndex:number = 0;
   test:boolean = false;
@@ -48,6 +48,7 @@ export class Tab implements OnInit,AfterViewInit{
 
   private onTabClick(index:number):void {
     this.activeIndex = index;
+    this.onTabChange && this.onTabChange(index);
   }
 
   private testClass():Object {

@@ -21,15 +21,17 @@ import {
     providers:[TopicListService],
     template:`
     <!--Action Bar-->
-    <scroll-bar [leftPos]="leftPos" [onTabChange]="onTabChange"></scroll-bar>
-    <DockLayout stretchLastChild="true" class="main-body">
+    <scroll-bar [leftPos]="leftPos" [onTabChange]="onTabChange" [tabIndex]="activeTab"></scroll-bar>
+    <DockLayout stretchLastChild="true">
       <!--底部tab-->
       <StackLayout dock="bottom">
-        <tab [tabs]="tabs"></tab>
+        <tab [tabs]="tabs" [onTabChange]="onMainTabChange"></tab>
       </StackLayout>
       <!--主内容区-->
       <StackLayout class="scrollview-wrapper" dock="top">
-          <hscroller [onScroll]="onScroll" [activeIndex]="activeIndex"></hscroller>
+          <!--首页-->
+          <hscroller *ngIf="activeTab === 0" [onScroll]="onScroll" [activeIndex]="activeIndex"></hscroller>
+          <Label text="tab2" *ngIf="activeTab === 1"></Label>
       </StackLayout>
      </DockLayout>
     `,
@@ -39,6 +41,7 @@ export class TabPage implements OnInit {
   leftPos = 20;
   tabWidth = 0;
   activeIndex = 0;
+  activeTab = 0;
   tabs = [{label:'首页',icon:'fa-home'},{label:'招聘',icon:'fa-graduation-cap'},{label:'收藏',icon:'fa-heart'},{label:'通知',icon:'fa-bell'},{label:'我',icon:'fa-user'}]
   /**
    * 0:no directin 1:right -1:left
@@ -50,6 +53,7 @@ export class TabPage implements OnInit {
 
   ngOnInit() {
     this.onTabChange = this.onTabChange.bind(this);
+    this.onMainTabChange = this.onMainTabChange.bind(this);
     this.onScroll = this.onScroll.bind(this);
     const topicParam = {
       tab:'job',
@@ -61,6 +65,10 @@ export class TabPage implements OnInit {
   private onScroll(pos:number){
     this.leftPos = pos;
     this._changeDetectionRef.detectChanges();
+  }
+
+  private onMainTabChange(index:number) {
+    this.activeTab = index;
   }
 
  get dataItems() {

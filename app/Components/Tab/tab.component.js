@@ -24,6 +24,7 @@ var Tab = (function () {
     };
     Tab.prototype.onTabClick = function (index) {
         this.activeIndex = index;
+        this.onTabChange && this.onTabChange(index);
     };
     Tab.prototype.testClass = function () {
         return {
@@ -41,6 +42,10 @@ var Tab = (function () {
         core_1.Input('tabs'), 
         __metadata('design:type', Array)
     ], Tab.prototype, "tabs", void 0);
+    __decorate([
+        core_1.Input('onTabChange'), 
+        __metadata('design:type', Function)
+    ], Tab.prototype, "onTabChange", void 0);
     Tab = __decorate([
         core_1.Component({
             selector: 'tab',

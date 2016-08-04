@@ -1,10 +1,12 @@
 "use strict";
 var core_1 = require('@angular/core');
+var router_1 = require("@angular/router");
 var platform_service_1 = require('../../Services/platform.service');
 var HScroller = (function () {
-    function HScroller(_platformService, _changeDetectionRef) {
+    function HScroller(_platformService, _changeDetectionRef, _router) {
         this._platformService = _platformService;
         this._changeDetectionRef = _changeDetectionRef;
+        this._router = _router;
         this.tabWidth = 0;
         this.leftPos = 20;
         this.myItems = [];
@@ -20,6 +22,9 @@ var HScroller = (function () {
             var activeIndex = changes['activeIndex'].currentValue;
             this.onTabChange(activeIndex);
         }
+    };
+    HScroller.prototype.onItemTap = function () {
+        this._router.navigate(["/detail"]);
     };
     HScroller.prototype.onTabChange = function (index) {
         this.scrollView && this.scrollView.scrollToHorizontalOffset(index * this.tabWidth, true);
@@ -57,11 +62,11 @@ var HScroller = (function () {
     HScroller = __decorate([
         core_1.Component({
             selector: 'hscroller',
-            template: "\n     <ScrollView  #scrollview class=\"scrollview\" orientation=\"horizontal\" >\n        <StackLayout class=\"scrollview-content\" orientation=\"horizontal\" >\n            <GridLayout class=\"scrollview-tab\" rows=\"auto,*\" [style.width]=\"tabWidth\">\n              <ListView [items]=\"myItems\" row=\"1\">\n                  <template let-item=\"item\" let-i=\"index\" let-odd=\"odd\" let-even=\"even\">\n                      <StackLayout>\n                          <Label [text]='\"index: \" + i'></Label>\n                          <Label [text]='\"[\" + item.id +\"] \" + item.name'></Label>\n                      </StackLayout>\n                  </template>\n              </ListView>\n            </GridLayout>\n            <StackLayout class=\"scrollview-tab\" [style.width]=\"tabWidth\"><Label text=\"2\"></Label></StackLayout>\n            <StackLayout class=\"scrollview-tab\" [style.width]=\"tabWidth\"><Label text=\"3\"></Label></StackLayout>\n            <StackLayout class=\"scrollview-tab\" [style.width]=\"tabWidth\"><Label text=\"4\"></Label></StackLayout>\n        </StackLayout>\n    </ScrollView>\n  ",
+            template: "\n     <ScrollView  #scrollview class=\"scrollview\" orientation=\"horizontal\">\n        <StackLayout class=\"scrollview-content\" orientation=\"horizontal\" >\n            <GridLayout class=\"scrollview-tab\" rows=\"auto,*\" [style.width]=\"tabWidth\">\n              <ListView [items]=\"myItems\" row=\"1\" (itemTap)=\"onItemTap($event)\">\n                  <template let-item=\"item\" let-i=\"index\" let-odd=\"odd\" let-even=\"even\">\n                      <StackLayout>\n                          <Label [text]='\"index: \" + i'></Label>\n                          <Label [text]='\"[\" + item.id +\"] \" + item.name'></Label>\n                      </StackLayout>\n                  </template>\n              </ListView>\n            </GridLayout>\n            <StackLayout class=\"scrollview-tab\" [style.width]=\"tabWidth\"><Label text=\"2\"></Label></StackLayout>\n            <StackLayout class=\"scrollview-tab\" [style.width]=\"tabWidth\"><Label text=\"3\"></Label></StackLayout>\n            <StackLayout class=\"scrollview-tab\" [style.width]=\"tabWidth\"><Label text=\"4\"></Label></StackLayout>\n        </StackLayout>\n    </ScrollView>\n  ",
             styleUrls: [],
             providers: [platform_service_1.PlatformService]
         }), 
-        __metadata('design:paramtypes', [platform_service_1.PlatformService, core_1.ChangeDetectorRef])
+        __metadata('design:paramtypes', [platform_service_1.PlatformService, core_1.ChangeDetectorRef, router_1.Router])
     ], HScroller);
     return HScroller;
 }());
