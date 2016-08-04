@@ -1,5 +1,6 @@
 "use strict";
 var core_1 = require('@angular/core');
+var nativescript_ng2_fonticon_1 = require('nativescript-ng2-fonticon');
 var Tab = (function () {
     function Tab() {
         this.activeIndex = 0;
@@ -43,8 +44,9 @@ var Tab = (function () {
     Tab = __decorate([
         core_1.Component({
             selector: 'tab',
-            template: "\n    <GridLayout class=\"tab\" rows=\"1,*\" [columns]=\"columns\">\n      <Label class=\"border\" row=\"0\" col=\"0\" [colSpan]=\"tabs.length\"></Label>\n      <AbsoluteLayout (tap)=\"onTabClick(i)\" row=\"1\" [col]=\"i\" class=\"tab-item\" *ngFor=\"let tab of tabs;let i = index;\">\n        <StackLayout orientation=\"vertical\" [ngClass]=\"getClass(i)\">\n          <Label text=\"&#xf0f3;\" class=\"font-awesome tab-icon\" ></Label>\n          <Label [text]=\"tab.label\" class=\"tab-label\"></Label>\n        </StackLayout>\n      </AbsoluteLayout>\n    </GridLayout>\n  ",
-            styleUrls: ['./Components/Tab/tab.css']
+            template: "\n    <GridLayout class=\"tab\" rows=\"1,*\" [columns]=\"columns\">\n      <Label class=\"border\" row=\"0\" col=\"0\" [colSpan]=\"tabs.length\"></Label>\n      <AbsoluteLayout (tap)=\"onTabClick(i)\" row=\"1\" [col]=\"i\" class=\"tab-item\" *ngFor=\"let tab of tabs;let i = index;\">\n        <StackLayout orientation=\"vertical\" [ngClass]=\"getClass(i)\">\n          <Label [text]=\"tab.icon | fonticon\" class=\"font-awesome tab-icon\" ></Label>\n          <Label [text]=\"tab.label\" class=\"tab-label\"></Label>\n        </StackLayout>\n      </AbsoluteLayout>\n    </GridLayout>\n  ",
+            styleUrls: ['./Components/Tab/tab.css'],
+            pipes: [nativescript_ng2_fonticon_1.TNSFontIconPipe]
         }), 
         __metadata('design:paramtypes', [])
     ], Tab);

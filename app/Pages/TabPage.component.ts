@@ -39,7 +39,7 @@ export class TabPage implements OnInit {
   leftPos = 20;
   tabWidth = 0;
   activeIndex = 0;
-  tabs = [{label:'首页',icon:'&#xf015;'},{label:'招聘',icon:'&#xf19d;'},{label:'收藏',icon:'&#xf004;'},{label:'通知',icon:'&#xf0f3;'},{label:'我',icon:'&#xf007;'}]
+  tabs = [{label:'首页',icon:'fa-home'},{label:'招聘',icon:'fa-graduation-cap'},{label:'收藏',icon:'fa-heart'},{label:'通知',icon:'fa-bell'},{label:'我',icon:'fa-user'}]
   /**
    * 0:no directin 1:right -1:left
    */

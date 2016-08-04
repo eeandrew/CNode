@@ -6,7 +6,7 @@ var routes = [
         path: "", redirectTo: "/index", terminal: true
     },
     {
-        path: '/index', component: TabPage_component_1.TabPage
+        path: 'index', component: TabPage_component_1.TabPage
     }
 ];
 exports.APP_ROUTER_PROVIDERS = [

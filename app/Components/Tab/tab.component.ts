@@ -4,6 +4,8 @@ import {
   OnInit,
   AfterViewInit
 } from '@angular/core';
+import {TNSFontIconPipe} from 'nativescript-ng2-fonticon';
+
 
 @Component({
   selector:'tab',
@@ -12,13 +14,14 @@ import {
       <Label class="border" row="0" col="0" [colSpan]="tabs.length"></Label>
       <AbsoluteLayout (tap)="onTabClick(i)" row="1" [col]="i" class="tab-item" *ngFor="let tab of tabs;let i = index;">
         <StackLayout orientation="vertical" [ngClass]="getClass(i)">
-          <Label text="&#xf0f3;" class="font-awesome tab-icon" ></Label>
+          <Label [text]="tab.icon | fonticon" class="font-awesome tab-icon" ></Label>
           <Label [text]="tab.label" class="tab-label"></Label>
         </StackLayout>
       </AbsoluteLayout>
     </GridLayout>
   `,
-  styleUrls:['./Components/Tab/tab.css']
+  styleUrls:['./Components/Tab/tab.css'],
+  pipes: [TNSFontIconPipe]
 })
 export class Tab implements OnInit,AfterViewInit{
   @Input('tabs') tabs:Array<Object>;

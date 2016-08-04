@@ -18,7 +18,7 @@ const routes: RouterConfig = [
     path: "", redirectTo: "/index", terminal: true
   },
   {
-    path:'/index',component:TabPage
+    path:'index',component:TabPage
   }
 ];
 

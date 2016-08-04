@@ -13,6 +13,7 @@ import {
 
 
 @Component({
+    moduleId: module.id,
     selector: 'app',
     directives: [NS_ROUTER_DIRECTIVES],
     template: `<page-router-outlet></page-router-outlet>`
