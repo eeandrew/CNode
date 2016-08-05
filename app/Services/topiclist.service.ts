@@ -33,13 +33,9 @@ export class TopicListService {
   public getTopicList(params:Object) {
     const queryString = this.makeGetQueryString(params);
     const queryUrl = `${this.baseURL}topics?${queryString}`;
-    let headers = new Headers();
-    headers.append("Authorization", "Bearer ");
-    return this._http.get('https://api.everlive.com/v1/GWfRtXi1Lwt4jcqK/Groceries',{
-      headers
-    })
+    return this._http.get(queryUrl)
       .toPromise()
-      .then(res => {alert(res);return res;})
+      .then(res => {return res;})
       .catch(this.handleErr)
   }
 

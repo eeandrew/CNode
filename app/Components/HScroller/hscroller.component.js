@@ -9,10 +9,6 @@ var HScroller = (function () {
         this._router = _router;
         this.tabWidth = 0;
         this.leftPos = 20;
-        this.myItems = [];
-        for (var i = 0; i < 50; i++) {
-            this.myItems.push({ id: i, name: "data item " + i });
-        }
     }
     HScroller.prototype.ngOnInit = function () {
         this.onScrollViewScrolling = this.onScrollViewScrolling.bind(this);
@@ -59,10 +55,14 @@ var HScroller = (function () {
         core_1.Input('activeIndex'), 
         __metadata('design:type', Number)
     ], HScroller.prototype, "activeIndex", void 0);
+    __decorate([
+        core_1.Input('items'), 
+        __metadata('design:type', Array)
+    ], HScroller.prototype, "items", void 0);
     HScroller = __decorate([
         core_1.Component({
             selector: 'hscroller',
-            template: "\n     <ScrollView  #scrollview class=\"scrollview\" orientation=\"horizontal\">\n        <StackLayout class=\"scrollview-content\" orientation=\"horizontal\" >\n            <GridLayout class=\"scrollview-tab\" rows=\"auto,*\" [style.width]=\"tabWidth\">\n              <ListView [items]=\"myItems\" row=\"1\" (itemTap)=\"onItemTap($event)\">\n                  <template let-item=\"item\" let-i=\"index\" let-odd=\"odd\" let-even=\"even\">\n                      <StackLayout>\n                          <Label [text]='\"index: \" + i'></Label>\n                          <Label [text]='\"[\" + item.id +\"] \" + item.name'></Label>\n                      </StackLayout>\n                  </template>\n              </ListView>\n            </GridLayout>\n            <StackLayout class=\"scrollview-tab\" [style.width]=\"tabWidth\"><Label text=\"2\"></Label></StackLayout>\n            <StackLayout class=\"scrollview-tab\" [style.width]=\"tabWidth\"><Label text=\"3\"></Label></StackLayout>\n            <StackLayout class=\"scrollview-tab\" [style.width]=\"tabWidth\"><Label text=\"4\"></Label></StackLayout>\n        </StackLayout>\n    </ScrollView>\n  ",
+            template: "\n     <ScrollView  #scrollview class=\"scrollview\" orientation=\"horizontal\">\n        <StackLayout class=\"scrollview-content\" orientation=\"horizontal\" >\n            <GridLayout class=\"scrollview-tab\" rows=\"auto,*\" [style.width]=\"tabWidth\">\n              <RadListView [items]=\"items\" row=\"1\" (itemTap)=\"onItemTap($event)\">\n                  <template listItemTemplate let-item=\"item\" let-i=\"index\">\n                    <StackLayout orientation=\"vertical\" class=\"list-item\">\n                      <StackLayout orientation=\"horizontal\" class=\"list-content\">\n                        <!--\u5934\u50CF-->\n                        <Image class=\"list-avatar\" [src]=\"item.author.avatar_url\"></Image>\n                        <!--\u7528\u6237\u540D \u521B\u5EFA\u65F6\u95F4-->\n                        <StackLayout orientation=\"vertical\">\n                          <Label [text]=\"item.author.loginname\"></Label>\n                          <Label [text]=\"item.create_at\"></Label>\n                        </StackLayout>\n                      </StackLayout>\n                      <!--title-->\n                      <StackLayout orientation=\"vertical\" class=\"list-title\">\n                          <Label [text]=\"item.title\"></Label>\n                      </StackLayout>\n                      <!--meta\u4FE1\u606F-->\n                      <GridLayout rows=\"1\" columns=\"1*,1*\">\n\n                      </GridLayout>\n                      <Label class=\"border-bottom\"></Label>\n                    </StackLayout>\n                  </template>\n              </RadListView>\n            </GridLayout>\n            <StackLayout class=\"scrollview-tab\" [style.width]=\"tabWidth\"><Label text=\"2\"></Label></StackLayout>\n            <StackLayout class=\"scrollview-tab\" [style.width]=\"tabWidth\"><Label text=\"3\"></Label></StackLayout>\n            <StackLayout class=\"scrollview-tab\" [style.width]=\"tabWidth\"><Label text=\"4\"></Label></StackLayout>\n        </StackLayout>\n    </ScrollView>\n  ",
             styleUrls: [],
             providers: [platform_service_1.PlatformService]
         }), 

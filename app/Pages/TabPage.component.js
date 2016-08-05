@@ -17,6 +17,7 @@ var TabPage = (function () {
          * 0:no directin 1:right -1:left
          */
         this.xDirection = 0;
+        this.loadListItems = this.loadListItems.bind(this);
     }
     TabPage.prototype.ngOnInit = function () {
         this.onTabChange = this.onTabChange.bind(this);
@@ -24,9 +25,22 @@ var TabPage = (function () {
         this.onScroll = this.onScroll.bind(this);
         var topicParam = {
             tab: 'job',
-            limit: 1
+            limit: 20
         };
-        this._topicListService.getTopicList(topicParam);
+        this.loadListItems(topicParam);
+    };
+    TabPage.prototype.loadListItems = function (params) {
+        var _this = this;
+        this._topicListService
+            .getTopicList(params)
+            .then(function (data) {
+            var result = data._body;
+            if (result && result.success) {
+                _this.items = result.data;
+                console.log(_this.items);
+            }
+        }).catch(function (error) {
+        });
     };
     TabPage.prototype.onScroll = function (pos) {
         this.leftPos = pos;
@@ -49,7 +63,7 @@ var TabPage = (function () {
         core_1.Component({
             selector: "mp-app",
             providers: [topiclist_service_1.TopicListService],
-            template: "\n    <!--Action Bar-->\n    <scroll-bar [leftPos]=\"leftPos\" [onTabChange]=\"onTabChange\" [tabIndex]=\"activeTab\"></scroll-bar>\n    <DockLayout stretchLastChild=\"true\">\n      <!--\u5E95\u90E8tab-->\n      <StackLayout dock=\"bottom\">\n        <tab [tabs]=\"tabs\" [onTabChange]=\"onMainTabChange\"></tab>\n      </StackLayout>\n      <!--\u4E3B\u5185\u5BB9\u533A-->\n      <StackLayout class=\"scrollview-wrapper\" dock=\"top\">\n          <!--\u9996\u9875-->\n          <hscroller *ngIf=\"activeTab === 0\" [onScroll]=\"onScroll\" [activeIndex]=\"activeIndex\"></hscroller>\n          <Label text=\"tab2\" *ngIf=\"activeTab === 1\"></Label>\n      </StackLayout>\n     </DockLayout>\n    ",
+            template: "\n    <!--Action Bar-->\n    <scroll-bar [leftPos]=\"leftPos\" [onTabChange]=\"onTabChange\" [tabIndex]=\"activeTab\"></scroll-bar>\n    <DockLayout stretchLastChild=\"true\">\n      <!--\u5E95\u90E8tab-->\n      <StackLayout dock=\"bottom\">\n        <tab [tabs]=\"tabs\" [onTabChange]=\"onMainTabChange\"></tab>\n      </StackLayout>\n      <!--\u4E3B\u5185\u5BB9\u533A-->\n      <StackLayout class=\"scrollview-wrapper\" dock=\"top\">\n          <!--\u9996\u9875-->\n          <hscroller [items]=\"items\" *ngIf=\"activeTab === 0\" [onScroll]=\"onScroll\" [activeIndex]=\"activeIndex\"></hscroller>\n          <Label text=\"tab2\" *ngIf=\"activeTab === 1\"></Label>\n      </StackLayout>\n     </DockLayout>\n    ",
             directives: [tab_component_1.Tab, scrollbar_component_1.ScrollBar, hscroller_component_1.HScroller]
         }), 
         __metadata('design:paramtypes', [core_1.ChangeDetectorRef, topiclist_service_1.TopicListService])

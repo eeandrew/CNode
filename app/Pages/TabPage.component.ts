@@ -30,7 +30,7 @@ import {
       <!--主内容区-->
       <StackLayout class="scrollview-wrapper" dock="top">
           <!--首页-->
-          <hscroller *ngIf="activeTab === 0" [onScroll]="onScroll" [activeIndex]="activeIndex"></hscroller>
+          <hscroller [items]="items" *ngIf="activeTab === 0" [onScroll]="onScroll" [activeIndex]="activeIndex"></hscroller>
           <Label text="tab2" *ngIf="activeTab === 1"></Label>
       </StackLayout>
      </DockLayout>
@@ -47,8 +47,10 @@ export class TabPage implements OnInit {
    * 0:no directin 1:right -1:left
    */
   private xDirection: number = 0;
+  items: Array<any>;
   constructor( private _changeDetectionRef: ChangeDetectorRef,
     private _topicListService: TopicListService) {
+      this.loadListItems = this.loadListItems.bind(this);
   }
 
   ngOnInit() {
@@ -57,9 +59,22 @@ export class TabPage implements OnInit {
     this.onScroll = this.onScroll.bind(this);
     const topicParam = {
       tab:'job',
-      limit:1
+      limit:20
     };
-    this._topicListService.getTopicList(topicParam)
+    this.loadListItems(topicParam);
+  }
+
+  loadListItems(params) {
+    this._topicListService
+    .getTopicList(params)
+    .then((data)=>{
+      const result = data._body;
+      if(result && result.success) {
+        this.items = result.data;
+        console.log(this.items);
+      }
+    }).catch((error)=>{
+    })
   }
 
   private onScroll(pos:number){

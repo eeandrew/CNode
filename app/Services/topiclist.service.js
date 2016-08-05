@@ -20,13 +20,9 @@ var TopicListService = (function () {
     TopicListService.prototype.getTopicList = function (params) {
         var queryString = this.makeGetQueryString(params);
         var queryUrl = this.baseURL + "topics?" + queryString;
-        var headers = new http_1.Headers();
-        headers.append("Authorization", "Bearer ");
-        return this._http.get('https://api.everlive.com/v1/GWfRtXi1Lwt4jcqK/Groceries', {
-            headers: headers
-        })
+        return this._http.get(queryUrl)
             .toPromise()
-            .then(function (res) { alert(res); return res; })
+            .then(function (res) { return res; })
             .catch(this.handleErr);
     };
     TopicListService.prototype.handleErr = function (err) {

@@ -25,14 +25,30 @@ import {
      <ScrollView  #scrollview class="scrollview" orientation="horizontal">
         <StackLayout class="scrollview-content" orientation="horizontal" >
             <GridLayout class="scrollview-tab" rows="auto,*" [style.width]="tabWidth">
-              <ListView [items]="myItems" row="1" (itemTap)="onItemTap($event)">
-                  <template let-item="item" let-i="index" let-odd="odd" let-even="even">
-                      <StackLayout>
-                          <Label [text]='"index: " + i'></Label>
-                          <Label [text]='"[" + item.id +"] " + item.name'></Label>
+              <RadListView [items]="items" row="1" (itemTap)="onItemTap($event)">
+                  <template listItemTemplate let-item="item" let-i="index">
+                    <StackLayout orientation="vertical" class="list-item">
+                      <StackLayout orientation="horizontal" class="list-content">
+                        <!--头像-->
+                        <Image class="list-avatar" [src]="item.author.avatar_url"></Image>
+                        <!--用户名 创建时间-->
+                        <StackLayout orientation="vertical">
+                          <Label [text]="item.author.loginname"></Label>
+                          <Label [text]="item.create_at"></Label>
+                        </StackLayout>
                       </StackLayout>
+                      <!--title-->
+                      <StackLayout orientation="vertical" class="list-title">
+                          <Label [text]="item.title"></Label>
+                      </StackLayout>
+                      <!--meta信息-->
+                      <GridLayout rows="1" columns="1*,1*">
+
+                      </GridLayout>
+                      <Label class="border-bottom"></Label>
+                    </StackLayout>
                   </template>
-              </ListView>
+              </RadListView>
             </GridLayout>
             <StackLayout class="scrollview-tab" [style.width]="tabWidth"><Label text="2"></Label></StackLayout>
             <StackLayout class="scrollview-tab" [style.width]="tabWidth"><Label text="3"></Label></StackLayout>
@@ -47,17 +63,14 @@ export class HScroller implements AfterViewInit,OnInit,OnChanges{
   @ViewChild('scrollview') scrollviewRef;
   @Input('onScroll') onScroll: Function;
   @Input('activeIndex') activeIndex:number;
+  @Input('items') items:Array<any>;
+
   private scrollView:ScrollView;
   tabWidth = 0;
   leftPos = 20;
-  public myItems;
   constructor(private _platformService:PlatformService,
   private _changeDetectionRef: ChangeDetectorRef,
   private _router: Router) {
-    this.myItems = [];
-    for (var i = 0; i < 50; i++) {
-        this.myItems.push({id:i, name:"data item " + i});
-    }
   }
 
   ngOnInit() {
