@@ -2,6 +2,7 @@
   height: 40;
   width: 100%;
   background-color: #FFF;
+  opacity: 0;
 }
 
 .tab-item StackLayout {

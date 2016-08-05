@@ -2,15 +2,23 @@ import {
   Component,
   Input,
   OnInit,
-  AfterViewInit
+  AfterViewInit,
+  ViewChild
 } from '@angular/core';
-import {TNSFontIconPipe} from 'nativescript-ng2-fonticon';
-
+import {
+  TNSFontIconPipe
+} from 'nativescript-ng2-fonticon';
+import {
+  GridLayout
+} from 'ui/layouts/grid-layout';
+import {
+  AnimationCurve
+} from "ui/enums";
 
 @Component({
   selector:'tab',
   template:`
-    <GridLayout class="tab" rows="1,*" [columns]="columns">
+    <GridLayout class="tab" rows="1,*" [columns]="columns" #tab>
       <Label class="border" row="0" col="0" [colSpan]="tabs.length"></Label>
       <AbsoluteLayout (tap)="onTabClick(i)" row="1" [col]="i" class="tab-item" *ngFor="let tab of tabs;let i = index;">
         <StackLayout orientation="vertical" [ngClass]="getClass(i)">
@@ -24,18 +32,32 @@ import {TNSFontIconPipe} from 'nativescript-ng2-fonticon';
   pipes: [TNSFontIconPipe]
 })
 export class Tab implements OnInit,AfterViewInit{
-  @Input('tabs') tabs:Array<Object>;
+  @Input('tabs') tabs:Array<{label:string,icon:string,active:boolean}>;
   @Input('onTabChange') onTabChange:Function;
+  @Input('displayMode') displayMode:boolean;
+  @ViewChild('tab') tabRef;
+
+  tabElem: GridLayout;
   columns:string;
   activeIndex:number = 0;
-  test:boolean = false;
   ngOnInit() {
     this.columns = this.getColumns(this.tabs.length);
   }
+
   ngAfterViewInit() {
-    setTimeout(() => {
-      this.test = true;
-    },10);
+    this.tabElem = this.tabRef.nativeElement;
+    this.tabElem.animate({
+      translate:{x:0,y:40},
+      duration:0,
+    });
+    setTimeout(()=>{
+      this.tabElem.animate({
+        translate:{x:0,y:0},
+        opacity:1,
+        duration:300,
+        curve:AnimationCurve.easeIn
+      });
+    },100);
   }
 
   private getColumns(count:number):string {
@@ -51,17 +73,12 @@ export class Tab implements OnInit,AfterViewInit{
     this.onTabChange && this.onTabChange(index);
   }
 
-  private testClass():Object {
-    return {
-      "font-awesome":this.test,
-      "tab-icon":this.test
-    };
-  }
 
   private getClass(index) {
+    let item = this.tabs[index];
     return {
-      "major-gray-color": this.activeIndex !== index,
-      "major-blue-color": this.activeIndex === index,
+      "major-gray-color": this.activeIndex !== index || !item.active,
+      "major-blue-color": (this.activeIndex === index && !this.displayMode) || (this.displayMode && item.active) ,
     };
   }
 }

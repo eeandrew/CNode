@@ -12,18 +12,27 @@ import {
     template:`
     <DockLayout stretchLastChild="true">
       <StackLayout dock="bottom">
-        <Label text="bottom"></Label>
-        <tab [tabs]="tabs" [onTabChange]="onTabClick"></tab>
+        <tab [tabs]="tabs" [onTabChange]="onTabClick" displayMode="{{true}}"></tab>
       </StackLayout>
       <StackLayout dock="top">
         <Label text="top"></Label>
       </StackLayout>
     </DockLayout>`,
+    directives:[Tab]
 })
 export class DetailPage {
-  tabs = [{label:'首页',icon:'fa-home'},{label:'招聘',icon:'fa-graduation-cap'},{label:'收藏',icon:'fa-heart'},{label:'通知',icon:'fa-bell'},{label:'我',icon:'fa-user'}];
+  constructor() {
+    this.onTabClick = this.onTabClick.bind(this);
+  }
 
-  onTabClick() {
-
+  tabs:Array<{label:string,icon:string,active:boolean}> = [
+    {label:'浏览(998)',icon:'fa-eye',active:false},
+    {label:'收藏',icon:'fa-heart',active:false},
+    {label:'评论(11k)',icon:'fa-comment',active:false}
+  ];
+  onTabClick(index) {
+    let item = this.tabs[index];
+    item.active = !item.active;
+    //this.tabs = Array.prototype.concat(this.tabs.slice(0,index),item,this.tabs.slice(++index));
   }
 }
