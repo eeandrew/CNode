@@ -52,7 +52,8 @@
 
 .list-item {
   width:100%;
-  margin-bottom:10;
+  background-color: #eee;
+  margin-bottom: 10;
 }
 
 .list-content {
@@ -69,4 +70,37 @@
   height: 40;
   border-radius:20;
   margin-right:10;
+}
+
+.meta-tag {
+  text-align: center;
+  width: 100%;
+}
+
+.meta-tag-item {
+  width: 50;
+}
+
+.auto-info {
+  font-size: 10;
+}
+
+.font15 {
+  font-size: 15;
+}
+
+.font18 {
+  font-size: 18;
+}
+
+.font10 {
+  font-size: 10;
+}
+
+.font12 {
+  font-size: 12;
+}
+
+.meta-section {
+  margin-bottom: 5;
 }

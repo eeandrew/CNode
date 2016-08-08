@@ -1,0 +1,25 @@
+.detail-section {
+    padding-left:10;
+    padding-right:10;
+}
+.avatar-small {
+    width: 30;
+    height: 30;
+    border-radius: 15;
+}
+
+.ml5 {
+    margin-left:5;
+}
+
+.meta-section {
+    margin-top:10;
+    margin-bottom:10;
+    color:rgba(0, 0, 0, 0.4)
+}
+
+
+.detail-content {
+    font-weight: bold;
+    color: rgba(0, 0, 0, 0.6);
+}

@@ -16,6 +16,29 @@ export class TopicListService {
 
   private baseURL:string = 'https://cnodejs.org/api/v1/';
 
+  private mockData():any {
+    return {
+      _body:{
+        success:true,
+        data:[{
+          author:{
+            loginname:'eeandrew',
+            avatar_url:'xxx',
+          },
+          create_at:'昨天',
+          title:'这是标题这是标题这是标题这是标题这是标题这是标题这是标题这是标题这是标题这是标题这是标题这是标题'
+        },{
+          author:{
+            loginname:'eeandrew',
+            avatar_url:'xxx',
+          },
+          create_at:'昨天',
+          title:'这是标题这是标题这是标题这是标题这是标题这是标题这是标题这是标题这是标题这是标题这是标题这是标题'
+        }]
+      }
+    };
+  }
+
   constructor(private _http: Http) {
 
   }
@@ -33,11 +56,12 @@ export class TopicListService {
   public getTopicList(params:Object) {
     const queryString = this.makeGetQueryString(params);
     const queryUrl = `${this.baseURL}topics?${queryString}`;
-    return this._http.get(queryUrl)
-      .toPromise()
-      .then(res => {return res;})
-      .catch(this.handleErr)
-  }
+    // return this._http.get(queryUrl)
+    //   .toPromise()
+    //   .then(res => {return res;})
+    //   .catch(this.handleErr)
+    return Promise.resolve(this.mockData());
+}
 
   private handleErr(err:any) {
     alert(JSON.stringify(err));

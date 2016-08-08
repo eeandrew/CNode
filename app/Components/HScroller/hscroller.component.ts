@@ -18,14 +18,17 @@ import {
 import {
   PlatformService
 } from '../../Services/platform.service';
+import {
+  TNSFontIconPipe
+} from 'nativescript-ng2-fonticon';
 
 @Component({
   selector:'hscroller',
   template:`
      <ScrollView  #scrollview class="scrollview" orientation="horizontal">
         <StackLayout class="scrollview-content" orientation="horizontal" >
-            <GridLayout class="scrollview-tab" rows="auto,*" [style.width]="tabWidth">
-              <RadListView [items]="items" row="1" (itemTap)="onItemTap($event)">
+            <GridLayout class="scrollview-tab" rows="auto,*" [style.width]="tabWidth" >
+              <RadListView [items]="items" row="1" (itemTap)="onItemTap($event)" class="scrollview-content">
                   <template listItemTemplate let-item="item" let-i="index">
                     <StackLayout orientation="vertical" class="list-item">
                       <StackLayout orientation="horizontal" class="list-content">
@@ -33,17 +36,37 @@ import {
                         <Image class="list-avatar" [src]="item.author.avatar_url"></Image>
                         <!--用户名 创建时间-->
                         <StackLayout orientation="vertical">
-                          <Label [text]="item.author.loginname"></Label>
-                          <Label [text]="item.create_at"></Label>
+                          <Label [text]="item.author.loginname" class="font15"></Label>
+                          <Label [text]="item.create_at" class="font10"></Label>
                         </StackLayout>
                       </StackLayout>
                       <!--title-->
-                      <StackLayout orientation="vertical" class="list-title">
-                          <Label [text]="item.title"></Label>
+                      <StackLayout orientation="vertical" class="list-title font15">
+                          <Label [text]="item.title" textWrap="true"></Label>
                       </StackLayout>
                       <!--meta信息-->
-                      <GridLayout rows="1" columns="1*,1*">
-
+                      <GridLayout rows="auto" columns="1*,1*,1*" class="meta-section">
+                        <!--收藏-->
+                        <StackLayout row="0" col="0" class="meta-tag" orientation="vertical">
+                          <StackLayout orientation="horizontal" class="meta-tag-item font12">
+                            <Label class="font-awesome" text="{{'fa-check-square-o' | fonticon}}"></Label>
+                            <Label text="收藏"></Label>
+                          </StackLayout>
+                        </StackLayout>
+                        <!--浏览-->
+                        <StackLayout row="0" col="1" class="meta-tag" orientation="vertical">
+                          <StackLayout orientation="horizontal" class="meta-tag-item font12">
+                            <Label class="font-awesome" text="{{'fa-check-square-o' | fonticon}}"></Label>
+                            <Label text="浏览"></Label>
+                          </StackLayout>
+                        </StackLayout>
+                        <!--评论-->
+                        <StackLayout row="0" col="2" class="meta-tag" orientation="vertical">
+                          <StackLayout orientation="horizontal" class="meta-tag-item font12">
+                            <Label class="font-awesome" text="{{'fa-check-square-o' | fonticon}}"></Label>
+                            <Label text="评论"></Label>
+                          </StackLayout>
+                        </StackLayout>
                       </GridLayout>
                       <Label class="border-bottom"></Label>
                     </StackLayout>
@@ -57,7 +80,8 @@ import {
     </ScrollView>
   `,
   styleUrls:[],
-  providers:[PlatformService]
+  providers:[PlatformService],
+  pipes:[TNSFontIconPipe]
 })
 export class HScroller implements AfterViewInit,OnInit,OnChanges{
   @ViewChild('scrollview') scrollviewRef;
