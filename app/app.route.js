@@ -10,7 +10,7 @@ var routes = [
     {
         path: 'index', component: TabPage_component_1.TabPage
     }, {
-        path: 'detail', component: DetailPage_component_1.DetailPage
+        path: 'detail/:id', component: DetailPage_component_1.DetailPage
     }, {
         path: 'response', component: ReponsePage_component_1.ResponsePage
     }

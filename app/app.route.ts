@@ -26,7 +26,7 @@ const routes: RouterConfig = [
   {
     path:'index',component:TabPage
   },{
-    path:'detail',component:DetailPage
+    path:'detail/:id',component:DetailPage
   },{
     path:'response',component:ResponsePage
   }

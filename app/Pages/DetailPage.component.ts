@@ -40,9 +40,14 @@ import {
     directives:[Tab],
     styleUrls:["Pages/DetailPage.css"]
 })
-export class DetailPage {
+export class DetailPage implements OnInit{
   constructor(private _router: Router) {
     this.onTabClick = this.onTabClick.bind(this);
+  }
+
+  ngOnInit() {
+    let id = this._router.parseUrl('id');
+    alert(id);
   }
 
   title:string = "头部信息头部信息头部信息头部信息头部信息头部信息头部信息头部信息";

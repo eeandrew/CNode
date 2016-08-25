@@ -37,6 +37,10 @@ var DetailPage = (function () {
         ];
         this.onTabClick = this.onTabClick.bind(this);
     }
+    DetailPage.prototype.ngOnInit = function () {
+        var id = this._router.parseUrl('id');
+        alert(id);
+    };
     DetailPage.prototype.onTabClick = function (index) {
         if (index === 2) {
             this._router.navigate(["/response"]);

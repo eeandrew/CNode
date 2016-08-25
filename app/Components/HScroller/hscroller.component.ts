@@ -28,7 +28,7 @@ import {
      <ScrollView  #scrollview class="scrollview" orientation="horizontal">
         <StackLayout class="scrollview-content" orientation="horizontal" >
             <GridLayout class="scrollview-tab" rows="auto,*" [style.width]="tabWidth" >
-              <RadListView [items]="items" row="1" (itemTap)="onItemTap($event)" class="scrollview-content">
+              <RadListView [items]="items" row="1" (itemTap)="onItemTap(item)" class="scrollview-content">
                   <template listItemTemplate let-item="item" let-i="index">
                     <StackLayout orientation="vertical" class="list-item">
                       <StackLayout orientation="horizontal" class="list-content">
@@ -108,7 +108,8 @@ export class HScroller implements AfterViewInit,OnInit,OnChanges{
     }
   }
 
-  onItemTap() {
+  onItemTap(item) {
+    console.log(item);
     this._router.navigate(["/detail"]);
   }
 
