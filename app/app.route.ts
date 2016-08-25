@@ -15,6 +15,9 @@ import {
 import {
   DetailPage
 } from './Pages/DetailPage.component';
+import {
+  ResponsePage
+} from './Pages/ReponsePage.component';
 
 const routes: RouterConfig = [
   {
@@ -24,6 +27,8 @@ const routes: RouterConfig = [
     path:'index',component:TabPage
   },{
     path:'detail',component:DetailPage
+  },{
+    path:'response',component:ResponsePage
   }
 ];
 

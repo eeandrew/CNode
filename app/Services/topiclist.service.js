@@ -42,11 +42,11 @@ var TopicListService = (function () {
     TopicListService.prototype.getTopicList = function (params) {
         var queryString = this.makeGetQueryString(params);
         var queryUrl = this.baseURL + "topics?" + queryString;
-        // return this._http.get(queryUrl)
-        //   .toPromise()
-        //   .then(res => {return res;})
-        //   .catch(this.handleErr)
-        return Promise.resolve(this.mockData());
+        return this._http.get(queryUrl)
+            .toPromise()
+            .then(function (res) { return res; })
+            .catch(this.handleErr);
+        //return Promise.resolve(this.mockData());
     };
     TopicListService.prototype.handleErr = function (err) {
         alert(JSON.stringify(err));

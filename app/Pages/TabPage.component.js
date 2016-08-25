@@ -40,6 +40,7 @@ var TabPage = (function () {
                 console.log(_this.items);
             }
         }).catch(function (error) {
+            console.log(error);
         });
     };
     TabPage.prototype.onScroll = function (pos) {

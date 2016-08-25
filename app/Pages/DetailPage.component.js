@@ -1,8 +1,10 @@
 "use strict";
 var core_1 = require("@angular/core");
 var tab_component_1 = require('../Components/Tab/tab.component');
+var router_1 = require("@angular/router");
 var DetailPage = (function () {
-    function DetailPage() {
+    function DetailPage(_router) {
+        this._router = _router;
         this.title = "头部信息头部信息头部信息头部信息头部信息头部信息头部信息头部信息";
         this.author = "eeandrew";
         this.time = "1小时前";
@@ -36,6 +38,10 @@ var DetailPage = (function () {
         this.onTabClick = this.onTabClick.bind(this);
     }
     DetailPage.prototype.onTabClick = function (index) {
+        if (index === 2) {
+            this._router.navigate(["/response"]);
+            return;
+        }
         var item = this.tabs[index];
         item.active = !item.active;
         this.tabs = Array.prototype.concat(this.tabs.slice(0, index), item, this.tabs.slice(++index));
@@ -47,7 +53,7 @@ var DetailPage = (function () {
             directives: [tab_component_1.Tab],
             styleUrls: ["Pages/DetailPage.css"]
         }), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [router_1.Router])
     ], DetailPage);
     return DetailPage;
 }());

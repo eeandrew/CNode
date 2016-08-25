@@ -56,11 +56,11 @@ export class TopicListService {
   public getTopicList(params:Object) {
     const queryString = this.makeGetQueryString(params);
     const queryUrl = `${this.baseURL}topics?${queryString}`;
-    // return this._http.get(queryUrl)
-    //   .toPromise()
-    //   .then(res => {return res;})
-    //   .catch(this.handleErr)
-    return Promise.resolve(this.mockData());
+    return this._http.get(queryUrl)
+      .toPromise()
+      .then(res => {return res;})
+      .catch(this.handleErr)
+    //return Promise.resolve(this.mockData());
 }
 
   private handleErr(err:any) {

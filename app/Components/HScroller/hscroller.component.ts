@@ -49,21 +49,21 @@ import {
                         <!--收藏-->
                         <StackLayout row="0" col="0" class="meta-tag" orientation="vertical">
                           <StackLayout orientation="horizontal" class="meta-tag-item font12">
-                            <Label class="font-awesome" text="{{'fa-check-square-o' | fonticon}}"></Label>
+                            <Label class="font-awesome" text="{{'fa-heart' | fonticon}}"></Label>
                             <Label text="收藏"></Label>
                           </StackLayout>
                         </StackLayout>
                         <!--浏览-->
                         <StackLayout row="0" col="1" class="meta-tag" orientation="vertical">
                           <StackLayout orientation="horizontal" class="meta-tag-item font12">
-                            <Label class="font-awesome" text="{{'fa-check-square-o' | fonticon}}"></Label>
+                            <Label class="font-awesome" text="{{'fa-eye' | fonticon}}"></Label>
                             <Label text="浏览"></Label>
                           </StackLayout>
                         </StackLayout>
                         <!--评论-->
                         <StackLayout row="0" col="2" class="meta-tag" orientation="vertical">
                           <StackLayout orientation="horizontal" class="meta-tag-item font12">
-                            <Label class="font-awesome" text="{{'fa-check-square-o' | fonticon}}"></Label>
+                            <Label class="font-awesome" text="{{'fa-comment' | fonticon}}"></Label>
                             <Label text="评论"></Label>
                           </StackLayout>
                         </StackLayout>

@@ -74,6 +74,7 @@ export class TabPage implements OnInit {
         console.log(this.items);
       }
     }).catch((error)=>{
+      console.log(error);
     })
   }
 

@@ -104,3 +104,12 @@
 .meta-section {
   margin-bottom: 5;
 }
+
+.input-section {
+  background-color:#ccc;
+  height: 40;
+}
+
+.reponse-input {
+  width:100%;
+}

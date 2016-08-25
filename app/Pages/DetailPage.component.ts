@@ -6,6 +6,9 @@ import {
 import {
   Tab
 } from '../Components/Tab/tab.component';
+import {
+  Router
+} from "@angular/router";
 
 @Component({
     selector:"detail-page",
@@ -38,7 +41,7 @@ import {
     styleUrls:["Pages/DetailPage.css"]
 })
 export class DetailPage {
-  constructor() {
+  constructor(private _router: Router) {
     this.onTabClick = this.onTabClick.bind(this);
   }
 
@@ -74,6 +77,10 @@ export class DetailPage {
     {label:'评论(11k)',icon:'fa-comment',active:false}
   ];
   onTabClick(index) {
+    if(index === 2) {
+      this._router.navigate(["/response"]);
+      return;
+    }
     let item = this.tabs[index];
     item.active = !item.active;
     this.tabs = Array.prototype.concat(this.tabs.slice(0,index),item,this.tabs.slice(++index));

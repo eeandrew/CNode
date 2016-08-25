@@ -6,7 +6,7 @@ var ResponsePage = (function () {
     ResponsePage = __decorate([
         core_1.Component({
             selector: 'response-page',
-            template: "\n  ",
+            template: "\n    <ActionBar title=\"\u56DE\u590D\"></ActionBar>\n    <DockLayout stretchLastChild=\"true\">\n      <StackLayout orientation=\"vertical\" dock=\"bottom\" class=\"input-section\">\n        <Label class=\"border\"></Label>\n        <TextView class=\"reponse-input\" (text)=\"response\" hint=\"\u8FD9\u91CC\u56DE\u590D\"></TextView>\n      </StackLayout>\n      <StackLayout dock=\"top\">\n        <Label text=\"Hello World\"></Label>\n      </StackLayout>\n    </DockLayout>\n  ",
         }), 
         __metadata('design:paramtypes', [])
     ], ResponsePage);
