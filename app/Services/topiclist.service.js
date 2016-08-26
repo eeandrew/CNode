@@ -48,6 +48,17 @@ var TopicListService = (function () {
             .catch(this.handleErr);
         //return Promise.resolve(this.mockData());
     };
+    TopicListService.prototype.getTopicDetail = function (params) {
+        var id = params.id;
+        delete params.id;
+        var queryString = this.makeGetQueryString(params);
+        var queryUrl = this.baseURL + "/topic/" + id + "?" + queryString;
+        console.log(queryUrl);
+        return this._http.get(queryUrl)
+            .toPromise()
+            .then(function (res) { return res; })
+            .catch(this.handleErr);
+    };
     TopicListService.prototype.handleErr = function (err) {
         alert(JSON.stringify(err));
         return Promise.reject(err);

@@ -63,6 +63,18 @@ export class TopicListService {
     //return Promise.resolve(this.mockData());
 }
 
+  public getTopicDetail(params:any) {
+    const id = params.id;
+    delete params.id;
+    const queryString = this.makeGetQueryString(params);
+    const queryUrl = `${this.baseURL}/topic/${id}?${queryString}`;
+    console.log(queryUrl);
+    return this._http.get(queryUrl)
+      .toPromise()
+      .then(res => {return res;})
+      .catch(this.handleErr)
+  }
+
   private handleErr(err:any) {
     alert(JSON.stringify(err));
     return Promise.reject(err);

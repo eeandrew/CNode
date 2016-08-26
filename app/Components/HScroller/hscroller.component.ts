@@ -28,10 +28,10 @@ import {
      <ScrollView  #scrollview class="scrollview" orientation="horizontal">
         <StackLayout class="scrollview-content" orientation="horizontal" >
             <GridLayout class="scrollview-tab" rows="auto,*" [style.width]="tabWidth" >
-              <RadListView [items]="items" row="1" (itemTap)="onItemTap(item)" class="scrollview-content">
+              <RadListView [items]="items" row="1" (itemTap)="onItemTap($event)" class="scrollview-content">
                   <template listItemTemplate let-item="item" let-i="index">
                     <StackLayout orientation="vertical" class="list-item">
-                      <StackLayout orientation="horizontal" class="list-content">
+                      <StackLayout orientation="horizontal" class="list-content ">
                         <!--头像-->
                         <Image class="list-avatar" [src]="item.author.avatar_url"></Image>
                         <!--用户名 创建时间-->
@@ -108,9 +108,10 @@ export class HScroller implements AfterViewInit,OnInit,OnChanges{
     }
   }
 
-  onItemTap(item) {
-    console.log(item);
-    this._router.navigate(["/detail"]);
+  onItemTap(args) {
+    console.log(JSON.stringify(this.items[args.itemIndex]));
+    let item = this.items[args.itemIndex];
+    this._router.navigate([`/detail/${item.id}`]);
   }
 
    private onTabChange(index:number) {
