@@ -17,31 +17,53 @@ var TabPage = (function () {
          * 0:no directin 1:right -1:left
          */
         this.xDirection = 0;
+        this.all = [];
+        this.good = [];
+        this.share = [];
+        this.ask = [];
         this.loadListItems = this.loadListItems.bind(this);
+        this.getHttpParams = this.getHttpParams.bind(this);
+        this.setItems = this.setItems.bind(this);
     }
     TabPage.prototype.ngOnInit = function () {
         this.onTabChange = this.onTabChange.bind(this);
         this.onMainTabChange = this.onMainTabChange.bind(this);
         this.onScroll = this.onScroll.bind(this);
-        var topicParam = {
-            tab: 'job',
-            limit: 20
-        };
-        this.loadListItems(topicParam);
+        this.loadListItems();
     };
-    TabPage.prototype.loadListItems = function (params) {
+    TabPage.prototype.loadListItems = function () {
         var _this = this;
+        var params = this.getHttpParams();
         this._topicListService
             .getTopicList(params)
             .then(function (data) {
             var result = data._body;
             if (result && result.success) {
-                _this.items = result.data;
-                console.log(_this.items);
+                console.log(result.data);
+                _this.setItems(result.data);
             }
         }).catch(function (error) {
             console.log(error);
         });
+    };
+    TabPage.prototype.setItems = function (items) {
+        switch (this.activeIndex) {
+            case 0:
+                this.all = items;
+                break;
+            case 1:
+                this.good = items;
+                break;
+            case 2:
+                this.share = items;
+                break;
+            case 3:
+                this.ask = items;
+                break;
+            default:
+                this.all = items;
+                break;
+        }
     };
     TabPage.prototype.onScroll = function (pos) {
         this.leftPos = pos;
@@ -49,6 +71,27 @@ var TabPage = (function () {
     };
     TabPage.prototype.onMainTabChange = function (index) {
         this.activeTab = index;
+    };
+    TabPage.prototype.getTabKey = function (index) {
+        switch (index) {
+            case 0:
+                return '';
+            case 1:
+                return 'good';
+            case 2:
+                return 'share';
+            case 3:
+                return 'ask';
+            default:
+                return '';
+        }
+    };
+    TabPage.prototype.getHttpParams = function () {
+        var params = {
+            tab: this.getTabKey(this.activeIndex),
+            limit: 20
+        };
+        return params;
     };
     Object.defineProperty(TabPage.prototype, "dataItems", {
         get: function () {
@@ -59,12 +102,13 @@ var TabPage = (function () {
     });
     TabPage.prototype.onTabChange = function (index) {
         this.activeIndex = index;
+        setTimeout(this.loadListItems, 500);
     };
     TabPage = __decorate([
         core_1.Component({
             selector: "mp-app",
             providers: [topiclist_service_1.TopicListService],
-            template: "\n    <!--Action Bar-->\n    <scroll-bar [leftPos]=\"leftPos\" [onTabChange]=\"onTabChange\" [tabIndex]=\"activeTab\"></scroll-bar>\n    <DockLayout stretchLastChild=\"true\">\n      <!--\u5E95\u90E8tab-->\n      <StackLayout dock=\"bottom\">\n        <tab [tabs]=\"tabs\" [onTabChange]=\"onMainTabChange\"></tab>\n      </StackLayout>\n      <!--\u4E3B\u5185\u5BB9\u533A-->\n      <StackLayout class=\"scrollview-wrapper\" dock=\"top\">\n          <!--\u9996\u9875-->\n          <hscroller [items]=\"items\" *ngIf=\"activeTab === 0\" [onScroll]=\"onScroll\" [activeIndex]=\"activeIndex\"></hscroller>\n          <Label text=\"tab2\" *ngIf=\"activeTab === 1\"></Label>\n      </StackLayout>\n     </DockLayout>\n    ",
+            template: "\n    <!--Action Bar-->\n    <scroll-bar [leftPos]=\"leftPos\" [onTabChange]=\"onTabChange\" [tabIndex]=\"activeTab\"></scroll-bar>\n    <DockLayout stretchLastChild=\"true\">\n      <!--\u5E95\u90E8tab-->\n      <StackLayout dock=\"bottom\">\n        <tab [tabs]=\"tabs\" [onTabChange]=\"onMainTabChange\"></tab>\n      </StackLayout>\n      <!--\u4E3B\u5185\u5BB9\u533A-->\n      <StackLayout class=\"scrollview-wrapper\" dock=\"top\">\n          <!--\u9996\u9875-->\n          <hscroller [all]=\"all\" [good]=\"good\" [share]=\"share\" [ask]=\"ask\" *ngIf=\"activeTab === 0\" [onScroll]=\"onScroll\" [activeIndex]=\"activeIndex\"></hscroller>\n          <Label text=\"tab2\" *ngIf=\"activeTab === 1\"></Label>\n      </StackLayout>\n     </DockLayout>\n    ",
             directives: [tab_component_1.Tab, scrollbar_component_1.ScrollBar, hscroller_component_1.HScroller]
         }), 
         __metadata('design:paramtypes', [core_1.ChangeDetectorRef, topiclist_service_1.TopicListService])

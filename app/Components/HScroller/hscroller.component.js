@@ -3,6 +3,7 @@ var core_1 = require('@angular/core');
 var router_1 = require("@angular/router");
 var platform_service_1 = require('../../Services/platform.service');
 var nativescript_ng2_fonticon_1 = require('nativescript-ng2-fonticon');
+var ListItem_component_1 = require('../ListItem/ListItem.component');
 var HScroller = (function () {
     function HScroller(_platformService, _changeDetectionRef, _router) {
         this._platformService = _platformService;
@@ -10,6 +11,7 @@ var HScroller = (function () {
         this._router = _router;
         this.tabWidth = 0;
         this.leftPos = 20;
+        this.onItemTap = this.onItemTap.bind(this);
     }
     HScroller.prototype.ngOnInit = function () {
         this.onScrollViewScrolling = this.onScrollViewScrolling.bind(this);
@@ -21,8 +23,23 @@ var HScroller = (function () {
         }
     };
     HScroller.prototype.onItemTap = function (args) {
-        console.log(JSON.stringify(this.items[args.itemIndex]));
-        var item = this.items[args.itemIndex];
+        var items;
+        switch (this.activeIndex) {
+            case 0:
+                items = this.all;
+                break;
+            case 1:
+                items = this.good;
+                break;
+            case 2:
+                items = this.share;
+                break;
+            case 3:
+                items = this.ask;
+                break;
+        }
+        var item = items[args.itemIndex];
+        console.log(JSON.stringify(item));
         this._router.navigate([("/detail/" + item.id)]);
     };
     HScroller.prototype.onTabChange = function (index) {
@@ -59,16 +76,29 @@ var HScroller = (function () {
         __metadata('design:type', Number)
     ], HScroller.prototype, "activeIndex", void 0);
     __decorate([
-        core_1.Input('items'), 
+        core_1.Input('all'), 
         __metadata('design:type', Array)
-    ], HScroller.prototype, "items", void 0);
+    ], HScroller.prototype, "all", void 0);
+    __decorate([
+        core_1.Input('good'), 
+        __metadata('design:type', Array)
+    ], HScroller.prototype, "good", void 0);
+    __decorate([
+        core_1.Input('share'), 
+        __metadata('design:type', Array)
+    ], HScroller.prototype, "share", void 0);
+    __decorate([
+        core_1.Input('ask'), 
+        __metadata('design:type', Array)
+    ], HScroller.prototype, "ask", void 0);
     HScroller = __decorate([
         core_1.Component({
             selector: 'hscroller',
-            template: "\n     <ScrollView  #scrollview class=\"scrollview\" orientation=\"horizontal\">\n        <StackLayout class=\"scrollview-content\" orientation=\"horizontal\" >\n            <GridLayout class=\"scrollview-tab\" rows=\"auto,*\" [style.width]=\"tabWidth\" >\n              <RadListView [items]=\"items\" row=\"1\" (itemTap)=\"onItemTap($event)\" class=\"scrollview-content\">\n                  <template listItemTemplate let-item=\"item\" let-i=\"index\">\n                    <StackLayout orientation=\"vertical\" class=\"list-item\">\n                      <StackLayout orientation=\"horizontal\" class=\"list-content \">\n                        <!--\u5934\u50CF-->\n                        <Image class=\"list-avatar\" [src]=\"item.author.avatar_url\"></Image>\n                        <!--\u7528\u6237\u540D \u521B\u5EFA\u65F6\u95F4-->\n                        <StackLayout orientation=\"vertical\">\n                          <Label [text]=\"item.author.loginname\" class=\"font15\"></Label>\n                          <Label [text]=\"item.create_at\" class=\"font10\"></Label>\n                        </StackLayout>\n                      </StackLayout>\n                      <!--title-->\n                      <StackLayout orientation=\"vertical\" class=\"list-title font15\">\n                          <Label [text]=\"item.title\" textWrap=\"true\"></Label>\n                      </StackLayout>\n                      <!--meta\u4FE1\u606F-->\n                      <GridLayout rows=\"auto\" columns=\"1*,1*,1*\" class=\"meta-section\">\n                        <!--\u6536\u85CF-->\n                        <StackLayout row=\"0\" col=\"0\" class=\"meta-tag\" orientation=\"vertical\">\n                          <StackLayout orientation=\"horizontal\" class=\"meta-tag-item font12\">\n                            <Label class=\"font-awesome\" text=\"{{'fa-heart' | fonticon}}\"></Label>\n                            <Label text=\"\u6536\u85CF\"></Label>\n                          </StackLayout>\n                        </StackLayout>\n                        <!--\u6D4F\u89C8-->\n                        <StackLayout row=\"0\" col=\"1\" class=\"meta-tag\" orientation=\"vertical\">\n                          <StackLayout orientation=\"horizontal\" class=\"meta-tag-item font12\">\n                            <Label class=\"font-awesome\" text=\"{{'fa-eye' | fonticon}}\"></Label>\n                            <Label text=\"\u6D4F\u89C8\"></Label>\n                          </StackLayout>\n                        </StackLayout>\n                        <!--\u8BC4\u8BBA-->\n                        <StackLayout row=\"0\" col=\"2\" class=\"meta-tag\" orientation=\"vertical\">\n                          <StackLayout orientation=\"horizontal\" class=\"meta-tag-item font12\">\n                            <Label class=\"font-awesome\" text=\"{{'fa-comment' | fonticon}}\"></Label>\n                            <Label text=\"\u8BC4\u8BBA\"></Label>\n                          </StackLayout>\n                        </StackLayout>\n                      </GridLayout>\n                      <Label class=\"border-bottom\"></Label>\n                    </StackLayout>\n                  </template>\n              </RadListView>\n            </GridLayout>\n            <StackLayout class=\"scrollview-tab\" [style.width]=\"tabWidth\"><Label text=\"2\"></Label></StackLayout>\n            <StackLayout class=\"scrollview-tab\" [style.width]=\"tabWidth\"><Label text=\"3\"></Label></StackLayout>\n            <StackLayout class=\"scrollview-tab\" [style.width]=\"tabWidth\"><Label text=\"4\"></Label></StackLayout>\n        </StackLayout>\n    </ScrollView>\n  ",
+            templateUrl: 'Components/HScroller/hscroller.html',
             styleUrls: [],
             providers: [platform_service_1.PlatformService],
-            pipes: [nativescript_ng2_fonticon_1.TNSFontIconPipe]
+            pipes: [nativescript_ng2_fonticon_1.TNSFontIconPipe],
+            directives: [ListItem_component_1.ListItem]
         }), 
         __metadata('design:paramtypes', [platform_service_1.PlatformService, core_1.ChangeDetectorRef, router_1.Router])
     ], HScroller);

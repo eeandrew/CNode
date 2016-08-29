@@ -1,7 +1,8 @@
 import { 
   Component, 
   OnInit, 
-  ChangeDetectorRef
+  ChangeDetectorRef,
+  AfterViewInit
  } from "@angular/core";
 import {
   Tab
@@ -34,7 +35,7 @@ import {
               <Label [text]="time" class="font12 ml5"></Label>
             </StackLayout>
             <StackLayout>
-              <Label [text]="content" textWrap="true" class="detail-content font15"></Label>
+              <HtmlView [html]="content" textWrap="true" class="detail-content font15"></HtmlView>
             </StackLayout>
           </StackLayout>
         </ScrollView>
@@ -43,13 +44,17 @@ import {
     directives:[Tab],
     styleUrls:["Pages/DetailPage.css"]
 })
-export class DetailPage implements OnInit{
+export class DetailPage implements OnInit, AfterViewInit{
   constructor(private _router: Router,
     private _topicService: TopicListService) {
     this.onTabClick = this.onTabClick.bind(this);
   }
 
   ngOnInit() {
+    
+  }
+
+  ngAfterViewInit() {
     let params = {
       id: this._router.url.trim().split('/detail/')[1] 
     }
@@ -58,11 +63,23 @@ export class DetailPage implements OnInit{
      .then(data => {
        const result = data._body;
         if(result && result.success) {
-          console.log(JSON.stringify(result.data));
           this.title = result.data.title;
           this.author = result.data.author;
           this.time = result.data.create_at;
           this.content = result.data.content;
+          this.tabs = [{
+            label:`浏览(${result.data.visit_count})`,
+            icon:'fa-eye',
+            active:false
+          },{
+             label:`收藏`,
+            icon:'fa-heart',
+            active:false
+          },{
+            label:`评论(${result.data.replies.length})`,
+            icon:'fa-comment',
+            active:false
+          }];
         }
      }).catch(error => {
        console.log(error);

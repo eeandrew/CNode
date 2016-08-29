@@ -30,7 +30,7 @@ import {
       <!--主内容区-->
       <StackLayout class="scrollview-wrapper" dock="top">
           <!--首页-->
-          <hscroller [items]="items" *ngIf="activeTab === 0" [onScroll]="onScroll" [activeIndex]="activeIndex"></hscroller>
+          <hscroller [all]="all" [good]="good" [share]="share" [ask]="ask" *ngIf="activeTab === 0" [onScroll]="onScroll" [activeIndex]="activeIndex"></hscroller>
           <Label text="tab2" *ngIf="activeTab === 1"></Label>
       </StackLayout>
      </DockLayout>
@@ -43,39 +43,62 @@ export class TabPage implements OnInit {
   activeIndex = 0;
   activeTab = 0;
   tabs = [{label:'首页',icon:'fa-home'},{label:'招聘',icon:'fa-graduation-cap'},{label:'收藏',icon:'fa-heart'},{label:'通知',icon:'fa-bell'},{label:'我',icon:'fa-user'}]
+  
   /**
    * 0:no directin 1:right -1:left
    */
   private xDirection: number = 0;
-  items: Array<any>;
+  all: Array<any> = [];
+  good: Array<any> = [];
+  share: Array<any> = [];
+  ask: Array<any> = [];
   constructor( private _changeDetectionRef: ChangeDetectorRef,
     private _topicListService: TopicListService) {
       this.loadListItems = this.loadListItems.bind(this);
+      this.getHttpParams = this.getHttpParams.bind(this);
+      this.setItems = this.setItems.bind(this);
   }
 
   ngOnInit() {
     this.onTabChange = this.onTabChange.bind(this);
     this.onMainTabChange = this.onMainTabChange.bind(this);
     this.onScroll = this.onScroll.bind(this);
-    const topicParam = {
-      tab:'job',
-      limit:20
-    };
-    this.loadListItems(topicParam);
+    this.loadListItems();
   }
 
-  loadListItems(params) {
+  loadListItems() {
+    const params = this.getHttpParams();
     this._topicListService
     .getTopicList(params)
     .then((data)=>{
       const result = data._body;
       if(result && result.success) {
-        this.items = result.data;
-        console.log(this.items);
+        console.log(result.data);
+        this.setItems(result.data);
       }
     }).catch((error)=>{
       console.log(error);
     })
+  }
+
+  private setItems(items) {
+    switch(this.activeIndex) {
+      case 0:
+        this.all = items;
+        break;
+      case 1: 
+        this.good = items;
+        break;
+      case 2:
+        this.share = items;
+        break;
+      case 3:
+        this.ask = items;
+        break;
+      default:
+        this.all = items;
+        break;
+    }
   }
 
   private onScroll(pos:number){
@@ -87,11 +110,35 @@ export class TabPage implements OnInit {
     this.activeTab = index;
   }
 
+  private getTabKey(index:number):string {
+    switch(index) {
+      case 0:
+        return '';
+      case 1:
+        return 'good';
+      case 2:
+        return 'share';
+      case 3: 
+        return 'ask';
+      default:
+        return ''; 
+    }
+  }
+
+  private getHttpParams() {
+    const params = {
+      tab: this.getTabKey(this.activeIndex),
+      limit:20
+    }; 
+    return params;
+  }
+
  get dataItems() {
    return [{name:'test',description:'test'}];
   }
 
   private onTabChange(index:number) {
     this.activeIndex = index;
+    setTimeout(this.loadListItems,500);
   }
 }
